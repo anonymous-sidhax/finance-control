@@ -1,0 +1,10 @@
+# This loads the Husky logic
+if [ -f "$(dirname "$0")/_/husky.sh" ]; then
+  . "$(dirname "$0")/_/husky.sh"
+fi
+
+# Check for type errors
+npm run typecheck
+
+# Check for linting/formatting
+npx lint-staged
