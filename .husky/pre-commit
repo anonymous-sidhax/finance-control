@@ -1,0 +1,5 @@
+# Check for type errors
+npm run typecheck
+
+# Check for linting/formatting
+npx lint-staged

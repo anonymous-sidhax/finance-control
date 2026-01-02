@@ -1,0 +1,43 @@
+name: PR Quality Check
+
+# Trigger this workflow when:
+# A PR is opened or updated targeting the 'master' branch
+on:
+  pull_request:
+    branches: ['master']
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Download the code from the PR
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Install Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Check for Formatting (Prettier)
+      - name: Check Formatting (Prettier)
+        run: npx prettier --check .
+
+      # Check for Linting Errors (ESLint)
+      - name: Run Linter
+        run: npm run lint
+
+      # Check for TypeScript errors
+      - name: Type Check
+        run: npm run typecheck
+
+      # Ensure the app actually builds
+      - name: Build Test
+        run: npm run build
