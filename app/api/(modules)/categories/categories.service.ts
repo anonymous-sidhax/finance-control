@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/app/api/lib/prisma'
 
 export class CategoriesService {
   private prisma = prisma

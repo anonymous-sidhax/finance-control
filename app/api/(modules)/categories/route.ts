@@ -1,7 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { CategoriesService } from './categories.service'
+import { validateDto } from '../../util/validateDTO'
+import { createCategorySchema } from '../../lib/joi/schema'
 
 const categoriesService = new CategoriesService()
+
+export async function POST(req: NextRequest) {
+  try {
+    const body = await req.json()
+    const validateError = await validateDto(createCategorySchema)(body)
+    if (validateError) return validateError
+    const category = await categoriesService.create(body)
+    return NextResponse.json(
+      {
+        message: 'Category successfully created',
+        success: true,
+        data: category,
+      },
+      { status: 201 }
+    )
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message: 'An error occured while creating category',
+        error: (error as Error).message,
+        success: false,
+      },
+      { status: 500 }
+    )
+  }
+}
 export async function GET() {
   try {
     const categories = await categoriesService.findAll()
@@ -17,30 +45,6 @@ export async function GET() {
     return NextResponse.json(
       {
         message: 'An error occured while fetching categories',
-        error: (error as Error).message,
-        success: false,
-      },
-      { status: 500 }
-    )
-  }
-}
-
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json()
-    const category = await categoriesService.create(body)
-    return NextResponse.json(
-      {
-        message: 'Category successfully created',
-        success: true,
-        data: category,
-      },
-      { status: 201 }
-    )
-  } catch (error) {
-    return NextResponse.json(
-      {
-        message: 'An error occured while creating category',
         error: (error as Error).message,
         success: false,
       },
