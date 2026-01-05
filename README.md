@@ -9,7 +9,7 @@ The core philosophy is "Manual Control with Automated Assistance": users retain 
 ### 1. Clone the repository
 
 ```bash
-git clone
+git clone https://github.com/anonymous-sidhax/finance-control.git
 ```
 
 ### 2. Install Dependencies
