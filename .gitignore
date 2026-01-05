@@ -42,7 +42,7 @@ next-env.d.ts
 
 # local database
 ./dev.db
-# Prisma generated client
+Prisma generated client
 generated/
 .prisma/
 node_modules/.prisma/
