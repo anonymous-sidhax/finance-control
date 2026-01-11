@@ -14,10 +14,10 @@ const navItems: NavItem[] = [
 
 export default function Home() {
   return (
-    <div className='flex min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-slate-900 dark:via-purple-950 dark:to-slate-900'>
+    <div className='flex min-h-screen w-screen flex-col bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 md:flex-row dark:from-slate-900 dark:via-purple-950 dark:to-slate-900'>
       <Navbar items={navItems} />
 
-      <main className='flex min-h-screen w-[85%] flex-col'>
+      <main className='flex min-h-screen w-full flex-col'>
         <HeaderSection />
         <div className='w-full grow p-6 lg:p-8 xl:p-10'>
           <div className='flex flex-col gap-6'>
