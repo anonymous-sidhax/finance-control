@@ -1,0 +1,2 @@
+# Force all files to be stored as LF (standard for web dev)
+* text=auto eol=lf
