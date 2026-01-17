@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
     const validateError = await validateDto(createCategorySchema)(body)
     if (validateError) return validateError
     const category = await categoriesService.create(body)
-
     return NextResponse.json(
       {
         message: 'Category successfully created',
@@ -31,7 +30,6 @@ export async function POST(req: NextRequest) {
     )
   }
 }
-
 export async function GET() {
   try {
     const categories = await categoriesService.findAll()
