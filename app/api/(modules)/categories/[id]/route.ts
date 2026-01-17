@@ -1,13 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { CategoriesService } from '../categories.service'
 
+type RouterContex = {
+  params: Promise<{
+    id: string
+  }>
+}
+
 const categoriesService = new CategoriesService()
-export async function DELETE(
-  _: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function DELETE(_: NextRequest, { params }: RouterContex) {
   try {
-    const id = Number(params.id)
+    const id = Number((await params).id)
     await categoriesService.delete(id)
     return NextResponse.json(
       {
@@ -28,12 +31,9 @@ export async function DELETE(
   }
 }
 
-export async function GET(
-  _: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(_: NextRequest, { params }: RouterContex) {
   try {
-    const id = Number(params.id)
+    const id = Number((await params).id)
     const category = await categoriesService.findById(id)
     return NextResponse.json(
       {
@@ -55,12 +55,9 @@ export async function GET(
   }
 }
 
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest, { params }: RouterContex) {
   try {
-    const id = Number(params.id)
+    const id = Number((await params).id)
     const body = await req.json()
     const category = await categoriesService.update(id, body)
     return NextResponse.json(
