@@ -41,5 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # local database
+./dev.db
 .prisma/
 node_modules/.prisma/

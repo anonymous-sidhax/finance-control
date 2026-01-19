@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
     )
   }
 }
-
 export async function GET() {
   try {
     const categories = await categoriesService.findAll()
