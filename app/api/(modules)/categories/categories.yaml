@@ -1,0 +1,198 @@
+/api/categories:
+  get:
+    tags:
+      - Categories
+    summary: Get all categories
+    description: Retrieve a list of all categories
+    responses:
+      200:
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  description:
+                    type: string
+
+  post:
+    tags:
+      - Categories
+    summary: Create a new category
+    description: Create a new category
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - name
+            properties:
+              name:
+                type: string
+                example: 'Electronics'
+              description:
+                type: string
+                example: 'Electronic devices and accessories'
+    responses:
+      201:
+        description: Category created successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                description:
+                  type: string
+      400:
+        description: Bad request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: 'Invalid input data'
+/api/categories/{id}:
+  get:
+    tags:
+      - Categories
+    summary: Get category by ID
+    description: Retrieve a category by its ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the category to retrieve
+    responses:
+      200:
+        description: Successful response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                description:
+                  type: string
+      404:
+        description: Category not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: 'Category not found'
+
+  put:
+    tags:
+      - Categories
+    summary: Update category by ID
+    description: Update a category by its ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the category to update
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: 'Updated Electronics'
+              description:
+                type: string
+                example: 'Updated description for electronic devices'
+    responses:
+      200:
+        description: Category updated successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: number
+                name:
+                  type: string
+                description:
+                  type: string
+      400:
+        description: Bad request
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: 'Invalid input data'
+      404:
+        description: Category not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: 'Category not found'
+
+  delete:
+    tags:
+      - Categories
+    summary: Delete category by ID
+    description: Delete a category by its ID
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+        description: The ID of the category to delete
+    responses:
+      200:
+        description: Category deleted successfully
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: 'Category deleted successfully'
+      404:
+        description: Category not found
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: 'Category not found'
