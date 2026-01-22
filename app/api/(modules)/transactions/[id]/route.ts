@@ -8,6 +8,7 @@ type RouterContext = {
 }
 
 const transactionsService = new TransactionsService()
+
 export async function DELETE(_: NextRequest, { params }: RouterContext) {
   try {
     const id = Number((await params).id)

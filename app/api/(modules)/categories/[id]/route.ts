@@ -8,6 +8,7 @@ type RouterContex = {
 }
 
 const categoriesService = new CategoriesService()
+
 export async function DELETE(_: NextRequest, { params }: RouterContex) {
   try {
     const id = Number((await params).id)
