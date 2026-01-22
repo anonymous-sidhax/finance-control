@@ -8,10 +8,31 @@ type RouterContex = {
 }
 
 const categoriesService = new CategoriesService()
+
 export async function DELETE(_: NextRequest, { params }: RouterContex) {
   try {
     const id = Number((await params).id)
-    await categoriesService.delete(id)
+    const existing = await categoriesService.findById(id)
+    if (!existing) {
+      return NextResponse.json(
+        {
+          message: 'Category not found',
+          success: false,
+        },
+        { status: 404 }
+      )
+    }
+    const category = await categoriesService.delete(id)
+
+    if (!category) {
+      return NextResponse.json(
+        {
+          message: 'Category not found',
+          success: false,
+        },
+        { status: 404 }
+      )
+    }
     return NextResponse.json(
       {
         message: 'Category successfully deleted',
@@ -34,7 +55,26 @@ export async function DELETE(_: NextRequest, { params }: RouterContex) {
 export async function GET(_: NextRequest, { params }: RouterContex) {
   try {
     const id = Number((await params).id)
+    const existing = await categoriesService.findById(id)
+    if (!existing) {
+      return NextResponse.json(
+        {
+          message: 'Category not found',
+          success: false,
+        },
+        { status: 404 }
+      )
+    }
     const category = await categoriesService.findById(id)
+    if (!category) {
+      return NextResponse.json(
+        {
+          message: 'Category not found',
+          success: false,
+        },
+        { status: 404 }
+      )
+    }
     return NextResponse.json(
       {
         message: 'Category successfully retrieved',
@@ -59,6 +99,16 @@ export async function PUT(req: NextRequest, { params }: RouterContex) {
   try {
     const id = Number((await params).id)
     const body = await req.json()
+    const existing = await categoriesService.findById(id)
+    if (!existing) {
+      return NextResponse.json(
+        {
+          message: 'Category not found',
+          success: false,
+        },
+        { status: 404 }
+      )
+    }
     const category = await categoriesService.update(id, body)
     return NextResponse.json(
       {
