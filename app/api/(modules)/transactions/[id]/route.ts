@@ -1,33 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { CategoriesService } from '../categories.service'
+import { TransactionsService } from '../transactions.service'
 
-type RouterContex = {
+type RouterContext = {
   params: Promise<{
     id: string
   }>
 }
 
-const categoriesService = new CategoriesService()
+const transactionsService = new TransactionsService()
 
-export async function DELETE(_: NextRequest, { params }: RouterContex) {
+export async function DELETE(_: NextRequest, { params }: RouterContext) {
   try {
     const id = Number((await params).id)
-    const existing = await categoriesService.findById(id)
+    const existing = await transactionsService.findById(id)
     if (!existing) {
       return NextResponse.json(
         {
-          message: 'Category not found',
+          message: 'Transaction not found',
           success: false,
         },
         { status: 404 }
       )
     }
 
-    await categoriesService.delete(id)
+    await transactionsService.delete(id)
 
     return NextResponse.json(
       {
-        message: 'Category successfully deleted',
+        message: 'Transaction successfully deleted',
         success: true,
       },
       { status: 200 }
@@ -35,7 +35,7 @@ export async function DELETE(_: NextRequest, { params }: RouterContex) {
   } catch (error) {
     return NextResponse.json(
       {
-        message: 'An error occured while deleting category',
+        message: 'An error occurred while deleting transaction',
         error: (error as Error).message,
         success: false,
       },
@@ -44,15 +44,15 @@ export async function DELETE(_: NextRequest, { params }: RouterContex) {
   }
 }
 
-export async function GET(_: NextRequest, { params }: RouterContex) {
+export async function GET(_: NextRequest, { params }: RouterContext) {
   try {
     const id = Number((await params).id)
-    const category = await categoriesService.findById(id)
+    const transaction = await transactionsService.findById(id)
 
-    if (!category) {
+    if (!transaction) {
       return NextResponse.json(
         {
-          message: 'Category not found',
+          message: 'Transaction not found',
           success: false,
         },
         { status: 404 }
@@ -61,16 +61,16 @@ export async function GET(_: NextRequest, { params }: RouterContex) {
 
     return NextResponse.json(
       {
-        message: 'Category successfully retrieved',
+        message: 'Transaction successfully retrieved',
         success: true,
-        data: category,
+        data: transaction,
       },
       { status: 200 }
     )
   } catch (error) {
     return NextResponse.json(
       {
-        message: 'An error occured while fetching category',
+        message: 'An error occurred while fetching transaction',
         error: (error as Error).message,
         success: false,
       },
@@ -79,36 +79,36 @@ export async function GET(_: NextRequest, { params }: RouterContex) {
   }
 }
 
-export async function PUT(req: NextRequest, { params }: RouterContex) {
+export async function PUT(req: NextRequest, { params }: RouterContext) {
   try {
     const id = Number((await params).id)
     const body = await req.json()
 
-    const existing = await categoriesService.findById(id)
+    const existing = await transactionsService.findById(id)
     if (!existing) {
       return NextResponse.json(
         {
-          message: 'Category not found',
+          message: 'Transaction not found',
           success: false,
         },
         { status: 404 }
       )
     }
 
-    const updatedCategory = await categoriesService.update(id, body)
+    const updatedTransaction = await transactionsService.update(id, body)
 
     return NextResponse.json(
       {
-        message: 'Category successfully updated',
+        message: 'Transaction successfully updated',
         success: true,
-        data: updatedCategory,
+        data: updatedTransaction,
       },
       { status: 200 }
     )
   } catch (error) {
     return NextResponse.json(
       {
-        message: 'An error occured while updating category',
+        message: 'An error occurred while updating transaction',
         error: (error as Error).message,
         success: false,
       },
