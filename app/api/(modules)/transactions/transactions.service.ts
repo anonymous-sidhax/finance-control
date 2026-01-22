@@ -16,6 +16,12 @@ export class TransactionsService {
     })
   }
 
+  async findById(id: number) {
+    return await this.prisma.transaction.findUnique({
+      where: { id },
+    })
+  }
+
   async findAll() {
     return await prisma.transaction.findMany({
       orderBy: { transactionDate: 'desc' },
